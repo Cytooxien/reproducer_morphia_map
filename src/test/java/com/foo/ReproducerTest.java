@@ -22,10 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class ReproducerTest extends BottleRocketTest {
     private Datastore datastore;
@@ -68,6 +65,14 @@ public class ReproducerTest extends BottleRocketTest {
 
         System.out.println("entity.equals(entity1) = " + Objects.equals(entity, entity1));
 
+        for (UUID uuid : entity1.getUuidList()) {
+            System.out.println(uuid.getClass());
+        }
+
+        entity1.getUuidMap().forEach((uuid, s) -> {
+            System.out.println(uuid.getClass());
+        });
+
         entity1.getMap().get("val").forEach((uuid, integer) -> {
             System.out.println(uuid.getClass());
         });
@@ -81,9 +86,14 @@ public class ReproducerTest extends BottleRocketTest {
         Map<UUID, Integer> entry = new HashMap<>();
         entry.put(UUID.randomUUID(), 100);
 
+        Map<UUID, String> uuidMap = new HashMap<>();
+        uuidMap.put(UUID.randomUUID(), "val2");
+
         Map<String, Map<UUID, Integer>> map = new HashMap<>();
         map.put("val", entry);
 
-       return new MyEntity(id, map);
+        List<UUID> uuidList = Collections.singletonList(UUID.randomUUID());
+
+       return new MyEntity(id, uuidList, uuidMap, map);
     }
 }

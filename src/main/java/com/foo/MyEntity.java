@@ -3,20 +3,21 @@ package com.foo;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
-@Entity(value = "test")
+@Entity()
 public class MyEntity {
 
     @Id
     private UUID id;
-    private Map<String, Map<UUID, Integer>> map = new HashMap<>();
+    private List<UUID> uuidList;
+    private Map<UUID, String> uuidMap;
+    private Map<String, Map<UUID, Integer>> map;
 
-    public MyEntity(UUID id, Map<String, Map<UUID, Integer>> map) {
+    public MyEntity(UUID id, List<UUID> uuidList, Map<UUID, String> uuidMap, Map<String, Map<UUID, Integer>> map) {
         this.id = id;
+        this.uuidList = uuidList;
+        this.uuidMap = uuidMap;
         this.map = map;
     }
 
@@ -29,6 +30,14 @@ public class MyEntity {
 
     public Map<String, Map<UUID, Integer>> getMap() {
         return map;
+    }
+
+    public Map<UUID, String> getUuidMap() {
+        return uuidMap;
+    }
+
+    public List<UUID> getUuidList() {
+        return uuidList;
     }
 
     @Override
